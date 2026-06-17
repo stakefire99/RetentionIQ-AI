@@ -10,31 +10,7 @@ RetentionIQ AI is an end-to-end customer analytics platform that combines predic
 
 ## 🚀 Live Demo
 
-[Add Streamlit Link Here]
-
----
-
-## 📸 Application Preview
-
-### Executive Dashboard
-
-[Add Screenshot]
-
-### Customer Intelligence
-
-[Add Screenshot]
-
-### Churn Prediction Engine
-
-[Add Screenshot]
-
-### Revenue Intelligence
-
-[Add Screenshot]
-
-### Retention Strategy Center
-
-[Add Screenshot]
+[(https://retentioniq-ai-auekhnplrdesbffqrojbcg.streamlit.app/)](url)
 
 ---
 
