@@ -74,7 +74,10 @@ def inject_global_css():
             font-family: 'Inter', sans-serif;
         }}
 
-        #MainMenu, header[data-testid="stHeader"], footer {{ visibility: hidden; }}
+        #MainMenu, footer {{ visibility: hidden; }}
+        /* Keep the header (it holds the sidebar open/close arrow) but make it invisible */
+        header[data-testid="stHeader"] {{ background: transparent; }}
+        [data-testid="stToolbar"], [data-testid="stDecoration"] {{ visibility: hidden; }}
 
         h1, h2, h3 {{
             font-family: 'Sora', sans-serif !important;
