@@ -164,11 +164,11 @@ with col3:
 
 with col4:
     render_section_header("Revenue At Risk", "Current vs. lost vs. at-risk revenue")
-    fig4 = go.Figure(data=[go.Bar(
-        x=["Active Revenue", "Lost Revenue (Churned)", "Annualized Risk"],
-        y=[kpis["current_active_monthly_revenue"], kpis["monthly_revenue_at_risk"], kpis["annual_revenue_at_risk"] / 12],
-        marker_color=[COLORS["emerald"], COLORS["red"], COLORS["amber"]],
-        text=[f"${v:,.0f}" for v in [kpis["current_active_monthly_revenue"], kpis["monthly_revenue_at_risk"], kpis["annual_revenue_at_risk"] / 12]],
+     fig4 = go.Figure(data=[go.Bar(
+        x=["Active Monthly Revenue", "Monthly Revenue Lost to Churn"],
+        y=[kpis["current_active_monthly_revenue"], kpis["monthly_revenue_at_risk"]],
+        marker_color=[COLORS["emerald"], COLORS["red"]],
+        text=[f"${v:,.0f}" for v in [kpis["current_active_monthly_revenue"], kpis["monthly_revenue_at_risk"]]],
         textposition="outside",
         textfont=dict(family="JetBrains Mono", color=COLORS["text"]),
     )])
