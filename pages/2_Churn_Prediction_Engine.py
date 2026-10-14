@@ -108,8 +108,8 @@ if submitted:
             <div class="riq-card" style="text-align:center; padding-top:34px; padding-bottom:34px;">
                 <div style="color:{COLORS['text_dim']}; font-size:12.5px; margin-bottom:8px;">CHURN PROBABILITY</div>
                 <div style="font-family:'JetBrains Mono'; font-size:34px; font-weight:700; color:{COLORS['text']};">{proba*100:.1f}%</div>
-                <div style="margin-top:14px; color:{COLORS['text_dim']}; font-size:12.5px;">PREDICTION CONFIDENCE</div>
-                <div style="font-family:'JetBrains Mono'; font-size:22px; font-weight:700; color:{COLORS['cyan']};">{metrics['roc_auc']*100:.0f}%</div>
+                <div style="margin-top:14px; color:{COLORS['text_dim']}; font-size:12.5px;">MODEL ROC-AUC (OVERALL)</div>
+                <div style="font-family:'JetBrains Mono'; font-size:22px; font-weight:700; color:{COLORS['cyan']};">{metrics['roc_auc']:.2f}</div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -145,17 +145,19 @@ if submitted:
         fig.update_layout(
             **PLOTLY_TEMPLATE["layout"],
             height=240,
-            margin=dict(l=10, r=30, t=10, b=10),
-            xaxis_title="Relative Contribution (%)",
+            margin=dict(l=10, r=40, t=10, b=10),
+            xaxis_title="Estimated risk-factor weight (%)",
         )
+        fig.update_xaxes(range=[0, max(breakdown.values()) * 1.25])
         st.plotly_chart(fig, use_container_width=True)
+        st.caption("Illustrative weighting: each factor's importance in the model, boosted when this customer's value is a known risk. It is not a per-customer explanation (such as SHAP).")
 
     if risk == "High":
         st.warning("⚠️ This profile shows a high probability of churn. See the Strategy Center for recommended retention actions.")
     elif risk == "Medium":
         st.info("This profile shows moderate churn risk. Proactive engagement is recommended.")
     else:
-        st.success("✅ This profile shows a low probability of churn.")
+        st.success("✅ Lower relative risk: churn probability is below the 40% Medium-risk threshold.")
 
 st.markdown(
     '<div class="riq-footer">RetentionIQ AI · Prediction Engine · Powered by RandomForestClassifier</div>',
