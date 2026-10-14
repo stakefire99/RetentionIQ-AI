@@ -164,7 +164,7 @@ with col3:
 
 with col4:
     render_section_header("Revenue At Risk", "Current vs. lost vs. at-risk revenue")
-     fig4 = go.Figure(data=[go.Bar(
+    fig4 = go.Figure(data=[go.Bar(
         x=["Active Monthly Revenue", "Monthly Revenue Lost to Churn"],
         y=[kpis["current_active_monthly_revenue"], kpis["monthly_revenue_at_risk"]],
         marker_color=[COLORS["emerald"], COLORS["red"]],
