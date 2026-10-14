@@ -8,10 +8,13 @@ Predict which customers are likely to leave, understand why, and see how much re
 
 **[Open the live app](https://retentioniq-ai-auekhnplrdesbffqrojbcg.streamlit.app/)**
 
-<!-- Add 3-4 screenshots here once you have them, e.g.:
+### Screenshots
+
 ![Executive dashboard](screenshots/dashboard.png)
-![Churn prediction](screenshots/prediction.png)
--->
+
+![Churn trend (simulated)](screenshots/churn-trend.png)
+
+![Churn prediction engine](screenshots/prediction-inputs.png)
 
 ---
 
@@ -65,7 +68,7 @@ A `RandomForestClassifier` (200 trees, max depth 10, class-weighted to handle th
 |---|---|
 | **Executive Dashboard** | Churn and retention rate, revenue at risk, segment insights |
 | **Customer Intelligence** | Customer profiles, risk scores, risk categories |
-| **Churn Prediction Engine** | Enter a customer's details and get a churn probability and risk tier |
+| **Churn Prediction Engine** | Enter a customer's details and get a churn probability, risk tier and an illustrative risk-factor weighting |
 | **Churn Drivers** | Feature-importance ranking of what drives churn |
 | **Revenue Intelligence** | Revenue at risk and highest-exposure customers (probability × annual value) |
 | **Retention Strategy Center** | Rule-based retention actions per customer profile |
@@ -101,7 +104,7 @@ The model is trained automatically on first run if it is not already saved.
 
 ## 🔮 Future Improvements
 
-* Explainable predictions with SHAP
+* Per-customer explanations with SHAP (the current risk-factor chart is an illustrative weighting, not SHAP)
 * Compare against gradient boosting and logistic regression baselines
 * Cost-based threshold tuning using retention-offer cost vs customer value
 
