@@ -74,10 +74,24 @@ def inject_global_css():
             font-family: 'Inter', sans-serif;
         }}
 
+        /* Hide Streamlit chrome we do not need, but NEVER hide the sidebar open arrow */
         #MainMenu, footer {{ visibility: hidden; }}
-        /* Keep the header (it holds the sidebar open/close arrow) but make it invisible */
         header[data-testid="stHeader"] {{ background: transparent; }}
-        [data-testid="stToolbar"], [data-testid="stDecoration"] {{ visibility: hidden; }}
+        [data-testid="stMainMenu"], [data-testid="stAppDeployButton"],
+        [data-testid="stDecoration"], [data-testid="stStatusWidget"] {{ visibility: hidden; }}
+        /* Make the arrow that reopens a collapsed sidebar always visible and clickable */
+        [data-testid="stSidebarCollapsedControl"],
+        [data-testid="stExpandSidebarButton"],
+        [data-testid="collapsedControl"] {{
+            visibility: visible !important;
+            display: flex !important;
+            z-index: 999999 !important;
+        }}
+        [data-testid="stSidebarCollapsedControl"] button,
+        [data-testid="stExpandSidebarButton"],
+        [data-testid="collapsedControl"] button {{ color: #E8EDF8 !important; }}
+        /* Remove the in-sidebar close button so visitors cannot collapse it and get stuck */
+        [data-testid="stSidebarCollapseButton"] {{ display: none !important; }}
 
         h1, h2, h3 {{
             font-family: 'Sora', sans-serif !important;
