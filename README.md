@@ -1,190 +1,114 @@
 # 📊 RetentionIQ AI
 
-### Customer Retention Intelligence Platform
+### Customer Churn Prediction & Retention Intelligence Platform
 
-Predict customer churn before it happens and uncover the business impact behind customer attrition.
-
-RetentionIQ AI is an end-to-end customer analytics platform that combines predictive analytics, customer intelligence, revenue risk analysis, and retention strategy recommendations to help organizations identify at-risk customers and improve retention outcomes.
-
----
+Predict which customers are likely to leave, understand why, and see how much revenue is at risk, all in one interactive Streamlit app.
 
 ## 🚀 Live Demo
 
-[(https://retentioniq-ai-auekhnplrdesbffqrojbcg.streamlit.app/)](url)
+**[Open the live app](https://retentioniq-ai-auekhnplrdesbffqrojbcg.streamlit.app/)**
+
+<!-- Add 3-4 screenshots here once you have them, e.g.:
+![Executive dashboard](screenshots/dashboard.png)
+![Churn prediction](screenshots/prediction.png)
+-->
 
 ---
 
 ## 🎯 Problem Statement
 
-Customer churn directly impacts revenue, customer lifetime value, and business growth.
-
-Organizations often struggle to answer critical questions:
+Customer churn directly hits revenue and lifetime value. A retention team needs to know:
 
 * Which customers are likely to leave?
 * Why are they leaving?
 * How much revenue is at risk?
-* What actions should be taken to retain them?
+* What should be done to keep them?
 
-RetentionIQ AI was built to answer these questions through an interactive analytics platform that transforms customer data into actionable business intelligence.
+RetentionIQ AI answers these with a predictive model plus business-focused dashboards.
 
----
+## 🗂️ Dataset
 
-## ✨ Key Features
-
-### 📈 Executive Dashboard
-
-* Churn Rate Monitoring
-* Retention Rate Analysis
-* Revenue At Risk Tracking
-* Customer Segmentation Insights
-* Executive Retention Storyline
-
-### 👤 Customer Intelligence
-
-* Customer Profiles
-* Churn Risk Scores
-* Customer Health Monitoring
-* Retention Insights
-* Risk Categorization
-
-### 🤖 Churn Prediction Engine
-
-* Predictive Churn Modeling
-* Risk Probability Scoring
-* Interactive Customer Inputs
-* Confidence Analysis
-* Personalized Risk Assessment
-
-### 📊 Churn Driver Analysis
-
-* Feature Importance Visualization
-* Top Churn Contributors
-* Customer Behavior Insights
-* Data-Driven Decision Support
-
-### 💰 Revenue Intelligence
-
-* Revenue At Risk Estimation
-* High-Value Customer Tracking
-* Financial Impact Assessment
-* Revenue Retention Opportunities
-
-### 🎯 Retention Strategy Center
-
-* Personalized Retention Recommendations
-* Customer Recovery Actions
-* Risk Mitigation Suggestions
-* Business Decision Support
+Public **IBM Telco Customer Churn** dataset: **7,043 customers, 21 columns** (contract, tenure, services, billing, monthly charges, churn flag). Overall churn rate: **26.5%**.
 
 ---
 
-## 🧠 Machine Learning Pipeline
+## 🧠 Model & Results
 
-### Data Preparation
+A `RandomForestClassifier` (200 trees, max depth 10, class-weighted to handle the 26.5% churn imbalance) trained on an 80/20 stratified split (5,634 train / 1,409 test).
 
-* Data Cleaning
-* Missing Value Handling
-* Feature Engineering
-* Data Transformation
+| Metric (held-out test set) | Result |
+|---|---|
+| ROC-AUC | **0.84** |
+| Recall | **75%** |
+| Accuracy | 77% |
+| Precision | 55% |
+| F1 | 0.63 |
 
-### Model Development
+**Why recall over precision?** Missing a customer who is about to leave costs more than offering a retention incentive to someone who would have stayed, so the model is tuned to catch more churners, at the cost of more false alarms (precision 55%).
 
-* Customer Churn Classification
-* Feature Importance Analysis
-* Risk Scoring Framework
-* Predictive Analytics Workflow
+**Risk tiers** (churn probability ≥ 0.7 = High, 0.4–0.7 = Medium, below 0.4 = Low) separate customers well: actual churn was about **76% in High**, **39% in Medium** and **4% in Low** risk. These tiers are scored across the whole dataset, including customers used for training, so treat them as illustrative rather than as out-of-sample results.
 
-### Evaluation Metrics
+---
 
-* Accuracy
-* Precision
-* Recall
-* F1 Score
-* ROC-AUC
+## 📈 Key Findings
+
+* **Contract type is the strongest churn driver.** Month-to-month customers churn at **42.7%**, compared with **11.3%** on one-year and **2.8%** on two-year contracts.
+* Tenure, total charges, monthly charges and online security / tech support complete the top drivers in the model's feature importance.
+* **1,869 customers churned**, representing about **$139K in monthly recurring revenue**, roughly **$1.67M per year**.
+* **1,429 customers are flagged High risk**, a prioritised list for retention outreach.
+
+---
+
+## ✨ App Pages
+
+| Page | What it does |
+|---|---|
+| **Executive Dashboard** | Churn and retention rate, revenue at risk, segment insights |
+| **Customer Intelligence** | Customer profiles, risk scores, risk categories |
+| **Churn Prediction Engine** | Enter a customer's details and get a churn probability and risk tier |
+| **Churn Drivers** | Feature-importance ranking of what drives churn |
+| **Revenue Intelligence** | Revenue at risk and highest-exposure customers (probability × annual value) |
+| **Retention Strategy Center** | Rule-based retention actions per customer profile |
+
+> **Note:** the dataset has no timestamps, so the monthly churn trend shown in the app is a **simulated illustration** anchored to the real overall churn rate, and is labelled as such. It is not a measured trend.
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Programming
-
-* Python
-
-### Data Analytics
-
-* Pandas
-* NumPy
-
-### Machine Learning
-
-* Scikit-Learn
-
-### Visualization
-
-* Plotly
-* Matplotlib
-
-### Application Development
-
-* Streamlit
-
-### Version Control
-
-* Git
-* GitHub
-
----
+Python · Pandas · NumPy · Scikit-learn · Plotly · Streamlit · Joblib · Git/GitHub
 
 ## 📂 Project Structure
 
 ```text
 RetentionIQ-AI/
-│
-├── app.py
-├── pages/
-├── data/
-├── models/
-├── utils/
-├── assets/
-├── requirements.txt
-└── README.md
+├── app.py                 # Executive dashboard (entry point)
+├── pages/                 # Customer intelligence, prediction, drivers, revenue, strategy
+├── utils/                 # data processing, model training, scoring, analytics, theme
+├── data/                  # Telco dataset and scored customers
+├── models/                # trained model, encoders, metrics
+└── requirements.txt
 ```
 
----
+## ▶️ Run Locally
 
-## 📈 Business Value
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
 
-RetentionIQ AI helps organizations:
+The model is trained automatically on first run if it is not already saved.
 
-* Identify high-risk customers early
-* Understand the drivers of customer churn
-* Reduce revenue loss
-* Improve customer retention strategies
-* Support data-driven decision making
+## 🔮 Future Improvements
 
----
-
-## 🔮 Future Enhancements
-
-* Real-Time Churn Monitoring
-* Customer Segmentation Engine
-* Explainable AI (SHAP Analysis)
-* Automated Retention Campaigns
-* CRM Integration
-* Multi-Industry Support
+* Explainable predictions with SHAP
+* Compare against gradient boosting and logistic regression baselines
+* Cost-based threshold tuning using retention-offer cost vs customer value
 
 ---
 
 ## 👩‍💻 Author
 
-Lakshita 
+**Lakshita** · MCA (Data Analytics)
 
-MCA (Data Analytics)
-
-GitHub: https://github.com/stakefire99
-
-LinkedIn: https://www.linkedin.com/in/lakshita-sharma-047439224/
-
----
-
-### Transforming customer data into retention intelligence.
+[GitHub](https://github.com/stakefire99) · [LinkedIn](https://www.linkedin.com/in/lakshita-047439224/)
